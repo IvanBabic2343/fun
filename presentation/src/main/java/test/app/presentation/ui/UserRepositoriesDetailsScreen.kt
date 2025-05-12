@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import org.koin.compose.getKoin
+import org.koin.androidx.compose.koinViewModel
 import test.app.domain.model.Repo
 import test.app.domain.model.Tag
 import test.app.presentation.R
@@ -23,9 +23,9 @@ import test.app.presentation.viewmodel.UserRepoDetailsViewModel
 
 @Composable
 fun UserRepositoriesDetailsScreen(
-    userRepoDetailsViewModel: UserRepoDetailsViewModel = getKoin().get(),
     repoName: String
 ) {
+    val userRepoDetailsViewModel: UserRepoDetailsViewModel = koinViewModel()
     val repoDetails by remember { userRepoDetailsViewModel.repoDetails }.collectAsState()
     val repoTags by remember { userRepoDetailsViewModel.repoTags }.collectAsState()
 

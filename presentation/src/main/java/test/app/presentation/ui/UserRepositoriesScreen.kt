@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import org.koin.compose.getKoin
+import org.koin.androidx.compose.koinViewModel
 import test.app.domain.model.Repo
 import test.app.domain.model.User
 import test.app.presentation.navigation.NavigationRoute
@@ -31,10 +31,11 @@ import test.app.presentation.viewmodel.UserViewModel
 
 @Composable
 fun UserRepositoriesScreen(
-    userRepositoriesViewModel: UserRepositoriesViewModel = getKoin().get(),
-    userViewModel: UserViewModel = getKoin().get(),
     navController: NavHostController
 ) {
+    val userRepositoriesViewModel: UserRepositoriesViewModel = koinViewModel()
+    val userViewModel: UserViewModel = koinViewModel()
+
     val repositoriesState by remember { userRepositoriesViewModel.repositoriesState }.collectAsState()
     val userState by remember { userViewModel.userState }.collectAsState()
 
@@ -75,7 +76,11 @@ fun UserHeader(userState: UIState<User>) {
                     modifier = Modifier.size(64.dp)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "All repos by: ${user.username}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text(
+                    text = "All repos by: ${user.username}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                )
             }
         }
 
